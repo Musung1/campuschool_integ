@@ -1,9 +1,9 @@
-name: Docker Workflow
+name: Docker Compose with Docker Hub
 
 on:
   push:
     branches:
-      - main  # 여기에 원하는 브랜치를 지정할 수 있습니다.
+      - main
 
 jobs:
   build:
@@ -16,17 +16,13 @@ jobs:
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v1
 
-    - name: Build and run Docker Compose
+    - name: Log in to Docker Hub
+      run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
+
+    - name: Pull images from Docker Hub
+      run: |
+        docker-compose pull
+
+    - name: Run Docker Compose
       run: |
         docker-compose up -d
-
-    - name: Log in to Docker Hub
-      run: echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-
-    - name: Push image to Docker Hub
-      run: |
-        docker tag your_image_name $DOCKER_HUB_USERNAME/your_image_name
-        docker push $DOCKER_HUB_USERNAME/your_image_name
-      env:
-        DOCKER_HUB_USERNAME: ${{ secrets.DOCKER_USERNAME }}
-        DOCKER_HUB_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
