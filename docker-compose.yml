@@ -12,7 +12,7 @@ services:
 
   spring-boot-app:
     build:
-      context: /campuschool_backend
+      context: campuschool_backend
       dockerfile: Dockerfile
     container_name: campuschool-back
     ports:
