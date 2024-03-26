@@ -27,6 +27,6 @@ jobs:
 
     - name: Deploy to EC2
       run: |
-        ssh -o StrictHostKeyChecking=no ec2-user@ec2-52-91-51-73.compute-1.amazonaws.com "cd /path/to/your/project && docker-compose pull && docker-compose up -d"
+        ssh -o StrictHostKeyChecking=no ec2-user@52.91.51.73 "cd /path/to/your/project && docker-compose pull && docker-compose up -d"
       env:
         SSH_PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
