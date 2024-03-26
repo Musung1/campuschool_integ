@@ -1,25 +1,21 @@
-name: deploy
+name: Run Docker Compose
 
-# Controls when the workflow will run
 on:
-  # Triggers the workflow on push or pull request events but only for the main branch
   push:
     branches:
-      - main
-
+      - main  # 여기에 원하는 브랜치를 지정할 수 있습니다.
 
 jobs:
-  SSH:
+  build:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
-      - name: ssh to ec2
-        uses: appleboy/ssh-action@master
-        with:
-          key: ${{ secrets.PRIVATE_KEY }} # 내가 변수로 저장한 pem key
-          host: ${{ secrets.HOST }} # 내가 변수로 저장한 ip
-          username: ec2-user # 내가 변수로 저장한 User
-          script: |
-            cd Github/Data_Project_2 # 내가 Clone한 폴더 안으로 들어간다.
-            git pull # 자동으로 pull해서 주기적 업데이트
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v1
+
+    - name: Build and run Docker Compose
+      run: |
+        docker-compose up -d
