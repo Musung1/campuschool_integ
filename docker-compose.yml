@@ -2,7 +2,7 @@ version: "3.8"
 
 services:
   mysql:
-    image: musung/mysql-first
+    image: mysql
     container_name: mysql-container
     environment:
       MYSQL_ROOT_PASSWORD: 1234567890
