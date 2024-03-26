@@ -1,4 +1,4 @@
-name: Run Docker Compose
+name: Docker Workflow
 
 on:
   push:
@@ -19,3 +19,14 @@ jobs:
     - name: Build and run Docker Compose
       run: |
         docker-compose up -d
+
+    - name: Log in to Docker Hub
+      run: echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+
+    - name: Push image to Docker Hub
+      run: |
+        docker tag your_image_name $DOCKER_HUB_USERNAME/your_image_name
+        docker push $DOCKER_HUB_USERNAME/your_image_name
+      env:
+        DOCKER_HUB_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+        DOCKER_HUB_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
