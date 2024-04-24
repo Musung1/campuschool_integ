@@ -6,6 +6,7 @@ import com.example.campuschool_backend.domain.user.RoleType;
 import com.example.campuschool_backend.domain.user.UserEntity;
 import com.example.campuschool_backend.dto.auth.SignUpForm;
 import com.example.campuschool_backend.dto.UserDTO;
+import com.example.campuschool_backend.exception.NoUserException;
 import com.example.campuschool_backend.repository.UserRepository;
 import com.example.campuschool_backend.service.UserService;
 import com.example.campuschool_backend.util.FileUpload;
@@ -37,7 +38,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDTO logIn(String username) {
         UserEntity userEntity = userRepository.findByUsername(username)
-                .orElseThrow(()->new RuntimeException());
+                .orElseThrow(()->new NoUserException("유저가 존재하지 않습니다"));
         return UserDTO.from(userEntity);
     }
 

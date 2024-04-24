@@ -1,7 +1,6 @@
 package com.example.campuschool_backend.controller;
 
 import com.example.campuschool_backend.domain.user.Description;
-import com.example.campuschool_backend.domain.user.UserEntity;
 import com.example.campuschool_backend.dto.auth.SignUpForm;
 import com.example.campuschool_backend.dto.UserDTO;
 import com.example.campuschool_backend.security.PrincipalUser;
@@ -9,6 +8,7 @@ import com.example.campuschool_backend.service.UserService;
 import com.example.campuschool_backend.util.FileUpload;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -26,7 +26,7 @@ import java.util.Map;
 public class AuthController {
     private final UserService userService;
     @PostMapping("/signup")
-    public ResponseEntity<UserDTO> signUp(@RequestBody SignUpForm signUpForm) {
+    public ResponseEntity<UserDTO> signUp(@RequestBody @Valid SignUpForm signUpForm) {
         UserDTO userDTO = userService.signUp(signUpForm);
         return ResponseEntity.ok(userDTO);
     }
@@ -70,8 +70,8 @@ public class AuthController {
         UserDTO userDTO = userService.modifyUserImage(principalUser.getUser(), url);
         return ResponseEntity.ok(userDTO);
     }
-    @PostMapping("/test")
+    @GetMapping("/test")
     public ResponseEntity<String> test() {
-        return ResponseEntity.ok("test");
+        throw new RuntimeException("테스트 런타임 에러");
     }
 }
