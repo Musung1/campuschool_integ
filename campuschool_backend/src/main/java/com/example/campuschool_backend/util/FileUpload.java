@@ -13,7 +13,7 @@ public class FileUpload {
 
     public static String local(
             MultipartFile mf, HttpServletRequest request
-    ) throws IOException {
+    ) {
         String returnValue = "";
         try {
             String root_path = path(request);
