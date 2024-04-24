@@ -8,6 +8,7 @@ import com.example.campuschool_backend.service.UserService;
 import com.example.campuschool_backend.util.FileUpload;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -25,7 +26,7 @@ import java.util.Map;
 public class AuthController {
     private final UserService userService;
     @PostMapping("/signup")
-    public ResponseEntity<UserDTO> signUp(@RequestBody SignUpForm signUpForm) {
+    public ResponseEntity<UserDTO> signUp(@RequestBody @Valid SignUpForm signUpForm) {
         UserDTO userDTO = userService.signUp(signUpForm);
         return ResponseEntity.ok(userDTO);
     }
