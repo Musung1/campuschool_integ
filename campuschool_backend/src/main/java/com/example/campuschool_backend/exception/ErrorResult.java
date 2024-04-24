@@ -1,4 +1,4 @@
-package com.example.campuschool_backend.util;
+package com.example.campuschool_backend.exception;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

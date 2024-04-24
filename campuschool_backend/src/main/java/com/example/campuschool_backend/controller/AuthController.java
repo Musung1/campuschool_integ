@@ -1,17 +1,14 @@
 package com.example.campuschool_backend.controller;
 
 import com.example.campuschool_backend.domain.user.Description;
-import com.example.campuschool_backend.domain.user.UserEntity;
 import com.example.campuschool_backend.dto.auth.SignUpForm;
 import com.example.campuschool_backend.dto.UserDTO;
 import com.example.campuschool_backend.security.PrincipalUser;
 import com.example.campuschool_backend.service.UserService;
-import com.example.campuschool_backend.util.ErrorResult;
 import com.example.campuschool_backend.util.FileUpload;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
