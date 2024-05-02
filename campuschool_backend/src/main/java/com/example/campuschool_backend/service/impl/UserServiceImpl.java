@@ -6,6 +6,7 @@ import com.example.campuschool_backend.domain.user.RoleType;
 import com.example.campuschool_backend.domain.user.UserEntity;
 import com.example.campuschool_backend.dto.auth.SignUpForm;
 import com.example.campuschool_backend.dto.UserDTO;
+import com.example.campuschool_backend.exception.DuplicateIdException;
 import com.example.campuschool_backend.exception.NoUserException;
 import com.example.campuschool_backend.repository.UserRepository;
 import com.example.campuschool_backend.service.UserService;
@@ -15,6 +16,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
@@ -30,9 +33,13 @@ public class UserServiceImpl implements UserService {
                 LoginType.EMAIL,
                 RoleType.USER
         );
+        if(checkDuplicate(signUpForm.getUsername())) throw new DuplicateIdException();
         UserEntity savedUser = userRepository.save(user);
         UserDTO userDTO = UserDTO.from(savedUser);
         return userDTO;
+    }
+    private boolean checkDuplicate(String username) {
+        return userRepository.findByUsername(username).isEmpty();
     }
 
     @Override
